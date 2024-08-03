@@ -4,6 +4,12 @@ This README provides instructions on setting up and running the application, inc
 Prerequisites
 Before setting up the application, ensure you have the following installed:
 
+Technologies used <br>
+
+React (Typescript)
+NodeJS
+PostegreSQL
+
 Node.js (version 14 or later) <br>
 npm (Node Package Manager) <br>
 PostgreSQL (version 12 or later)<br><br>
