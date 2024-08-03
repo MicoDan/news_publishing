@@ -150,14 +150,15 @@ export const addComment = async (req, res) => {
  * Fetches all comments for a specific post, ordered by date in descending order.
  */
 export const getComments = async (req, res) => {
-  const { post_id } = req.params;
+  const { id } = req.params;
   const query = `SELECT comments.id AS comment_id, comment, date, user_id, username, users.img AS user_img FROM comments
     JOIN users ON comments.user_id = users.id
     WHERE post_id = $1 ORDER BY date DESC`;
   try {
-    const data = await db.query(query, [post_id]);
+    const data = await db.query(query, [id]);
     res.status(200).json(data.rows);
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 };
@@ -184,5 +185,33 @@ export const deleteComment = async (req, res) => {
     res.status(200).json("Comment deleted successfully");
   } catch (err) {
     res.status(500).json("Token is not valid");
+  }
+};
+
+
+/**
+ * Update a Comment
+ * Updates a comment by ID, but only if the user is authorized (i.e., they are the owner of the comment).
+ */
+export const updateComment = async (req, res) => {
+  let query;
+  try {
+    const userInfo = req.user;
+    const { id } = req.params;
+    const { comment } = req.body;
+
+    // Checking if the comment belongs to the user
+    query = `SELECT user_id FROM comments WHERE id = $1`;
+    const data = await db.query(query, [id]);
+    if (data.rows.length === 0 || data.rows[0].user_id !== userInfo.id) {
+      return res.status(403).json("You are not authorized to update this comment");
+    }
+
+    // Updating the comment
+    query = `UPDATE comments SET comment = $1 WHERE id = $2 AND user_id = $3`;
+    await db.query(query, [comment, id, userInfo.id]);
+    res.status(200).json("Comment updated successfully");
+  } catch (err) {
+    res.status(500).json("An error occurred while updating the comment");
   }
 };

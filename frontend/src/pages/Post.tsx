@@ -4,17 +4,17 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import "react-quill/dist/quill.snow.css"; // Import the Quill editor styles
 import { MdOutlineDriveFolderUpload } from "react-icons/md";
-import axios from 'axios'
+import axios from 'axios';
 import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Loading } from "@/components/Loading";
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 
 /**
- * Write Component
+ * Post Component
  * This component renders a form for creating or editing a post.
  */
-const Write = () => {
+const Post = () => {
   const state = useLocation().state;
 
   // State to manage post details
@@ -49,14 +49,15 @@ const Write = () => {
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
+        //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
         const res = await axios.post("http://localhost:5000/upload", formData);
         return res.data;
       }
       if (state?.posts_img) return state.posts_img;
-      toast.success('image successfully uploaded')
+      toast.success('Image successfully uploaded');
       return defaultImg;
     } catch (err) {
-      toast.error('image failed to upload')
+      toast.error('Image failed to upload');
       console.log(err);
       return defaultImg;
     }
@@ -81,6 +82,7 @@ const Write = () => {
     try {
       const res = state
         ? await axios.put(
+          //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
             `http://localhost:5000/posts/${state.post_id}`,
             {
               title,
@@ -92,6 +94,7 @@ const Write = () => {
             { withCredentials: true }
           )
         : await axios.post(
+            //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
             "http://localhost:5000/posts",
             {
               title,
@@ -102,11 +105,11 @@ const Write = () => {
             },
             { withCredentials: true }
           );
-          toast.success('post successfully added')
+      toast.success('Post successfully added');
       console.log(res.data);
       navigate(state ? `/post/${state.post_id}` : "/");
     } catch (err) {
-      toast.error('post creation failure')
+      toast.error('Post creation failure');
       console.log(err);
     } finally {
       setIsLoading(false);
@@ -116,14 +119,14 @@ const Write = () => {
   return (
     <>
       {isLoading && <Loading />}
-      <div className="flex gap-5 pb-7">
-        <div className="flex-5 flex flex-col gap-5 py-3 px-5 border-border-hust rounded-lg border-2">
-          <h1 className="text-xl text-black font-bold">Post editor</h1>
+      <div className="flex flex-col lg:flex-row gap-5 pb-7">
+        <div className="flex-1 flex flex-col gap-5 py-3 px-5 border border-gray-300 rounded-lg">
+          <h1 className="text-xl font-bold">Post editor</h1>
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            className="p-3 bg-foreground-hust border-border-hust border-2 text-lg text-copy-lighter"
+            className="p-3 bg-white border border-gray-300 rounded-md text-lg"
           />
           <TextArea
             val={val}
@@ -132,13 +135,13 @@ const Write = () => {
             placeholder="Content"
           />
         </div>
-        <div className="flex-2 flex flex-col gap-5">
-          <div className="flex-1 flex flex-col justify-between gap-2 p-3 border-border-hust rounded-lg border-2 text-sm text-copy-light">
-            <h1 className="text-xl text-purple-800 font-bold">Publish</h1>
-            <span className="text-black">
+        <div className="flex-1 flex flex-col gap-5 max-w-96">
+          <div className="flex-1 flex flex-col justify-between gap-2 p-3 border border-gray-300 rounded-lg text-sm">
+            <h1 className="text-xl font-bold text-purple-800">Publish</h1>
+            <span>
               <b>Status:</b> <b>Draft</b>
             </span>
-            <span className="text-black">
+            <span>
               <b>Visibility:</b> <b>Public</b>
             </span>
             <input
@@ -147,13 +150,9 @@ const Write = () => {
               style={{ display: "none" }}
               onChange={(e) => e.target.files && setFile(e.target.files[0])}
             />
-            <label htmlFor="file" className="underline flex gap-1 w-min">
-              <span className="cursor-pointer text-nowrap overflow-hidden max-w-32 text-black">
-                {file ? file.name : "Upload image"}
-              </span>
-              <span className="flex items-end size-5 cursor-pointer">
-                <MdOutlineDriveFolderUpload className="size-full" />
-              </span>
+            <label htmlFor="file" className="underline flex gap-1 cursor-pointer">
+              <span>{file ? file.name : "Upload image"}</span>
+              <MdOutlineDriveFolderUpload className="w-5 h-5" />
             </label>
             <div className="flex justify-between">
               <Button variant="hust" onClick={handleDraft}>
@@ -164,18 +163,17 @@ const Write = () => {
               </Button>
             </div>
           </div>
-          <div className="flex-1 flex flex-col justify-between gap-2 px-3 py-2 border-border-hust rounded-lg border-2 text-sm text-copy-light">
-            <h1 className="text-xl text-purple-800 font-bold">Category</h1>
+          <div className="flex-1 flex flex-col justify-between gap-2 p-3 border border-gray-300 rounded-lg text-sm">
+            <h1 className="text-xl font-bold text-purple-800">Category</h1>
             {categoryArray.map((name, index) => (
-              <div className="flex text-black items-center gap-2" key={index}>
+              <div className="flex items-center gap-2" key={index}>
                 <input
                   type="radio"
                   name="category"
                   value={name}
                   id={name}
                   defaultChecked={name === category}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onClick={(e: any) => setCategory(e.target.value)}
+                  onChange={(e) => setCategory(e.target.value)}
                 />
                 <label htmlFor={name}>{name}</label>
               </div>
@@ -187,4 +185,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default Post;

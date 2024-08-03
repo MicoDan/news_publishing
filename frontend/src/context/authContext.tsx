@@ -30,6 +30,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
    * @returns {Promise<void>} A promise that resolves when the login is complete.
    */
   const login = async (input: Input) => {
+    //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
     const res = await axios.post("http://localhost:5000/auth/login", input, {
       withCredentials: true,
     });
@@ -42,6 +43,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
    * @returns {Promise<void>} A promise that resolves when the logout is complete.
    */
   const logout = async () => {
+    //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
     const res = await axios.post("http://localhost:5000/auth/logout", {}, {
       withCredentials: true,
     });

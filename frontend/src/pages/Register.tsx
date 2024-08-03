@@ -44,6 +44,7 @@ const Register = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
+      //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
       await axios.post("http://localhost:5000/auth/register", input);
       console.log("User has been successfully created");
       toast.success('successfully registered user')
@@ -56,12 +57,12 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-gradient-to-tr from-primary-dark via-primary-hust to-primary-light h-lvh flex flex-col justify-center items-center gap-4">
+    <div className="bg-gradient-to-tr from-purple-400 via-purple-500 to-purple-600 h-lvh flex flex-col justify-center items-center gap-4">
       <BackButton />
       <h1 className="text-primary-content scroll-m-20 text-3xl font-extrabold lg:text-4xl">
         Register Page
       </h1>
-      <form className="flex flex-col p-6 bg-background-hust w-72 gap-5 rounded-lg">
+      <form className="flex flex-col p-10 bg-background-hust w-72 gap-5 rounded-lg">
         <Input
           required
           placeholder="username"

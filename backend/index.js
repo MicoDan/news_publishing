@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors"; 
 import authRoutes from "./routes/auth.js"; // Importing authentication routes
 import postsRoutes from "./routes/posts.js"; // Importing post-related routes
+import commentRoutes from './routes/comments.js' //Importing comment routes
 import usersRoutes from "./routes/users.js"; // Importing user-related routes
 import uploadRoutes from "./routes/upload.js"; // Importing file upload routes
 import cookieParser from "cookie-parser"; // Importing middleware to parse cookies
@@ -37,6 +38,10 @@ app.use("/auth", authRoutes);
 // Post routes
 // Handles routes related to posts (e.g: creating, reading, updating, deleting posts)
 app.use("/posts", postsRoutes);
+
+// Comment routes
+// Handles routes related to comments (e.g: creating, reading, updating, deleting posts)
+app.use("/comments", commentRoutes);
 
 // User routes
 // Handles routes related to user data (e.g: fetching user profiles)

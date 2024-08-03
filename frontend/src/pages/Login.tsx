@@ -59,13 +59,13 @@ const Login = (): JSX.Element => {
   };
 
   return (
-    <div className="bg-gradient-to-tr from-primary-dark via-primary-hust to-primary-light h-lvh flex flex-col justify-center items-center gap-4">
+    <div className="bg-gradient-to-tr from-purple-400 via-purple-500 to-purple-600 h-lvh flex flex-col justify-center items-center gap-4">
       <BackButton /> {/* Back button component */}
       {isLoading && <Loading />} {/* Loading component */}
       <h1 className="text-primary-content scroll-m-20 text-4xl font-extrabold lg:text-5xl">
         Login Page
       </h1>
-      <form className="flex flex-col p-6 bg-background-hust w-72 gap-5 rounded-lg">
+      <form className="flex flex-col p-10 bg-background-hust w-72 gap-10 rounded-lg">
         <Input
           placeholder="username or email"
           name="username"

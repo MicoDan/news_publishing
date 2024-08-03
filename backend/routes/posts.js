@@ -6,6 +6,10 @@ import {
   deletePost,
   updatePost,
   getRelatedPosts,
+  addComment,
+  deleteComment,
+  getComments,
+  updateComment,
 } from "../controllers/crud.js"; // Importing CRUD controller functions
 import { authorizeToken } from "../middleware/authorizeToken.js"; // Importing middleware for authorization
 
@@ -43,5 +47,8 @@ router.delete("/:id", authorizeToken, deletePost);
 // This route is protected by the 'authorizeToken' middleware
 // Calls the 'updatePost' controller function with the post ID as a parameter
 router.put("/:id", authorizeToken, updatePost);
+
+
+
 
 export default router;

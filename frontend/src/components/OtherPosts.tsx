@@ -27,10 +27,10 @@ const OtherPosts: React.FC<OtherPostsProps> = ({ post_id, category }) => {
       try {
         // Fetching related posts based on post_id and category
         const response = await axios.get(
+        //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
           `http://localhost:5000/posts/${post_id}/related?category=${category}`
         );
         setPosts(response.data); // Updating state with fetched posts
-        toast.success('successfully fetched the posts')
       } catch (error) {
         toast.error('failed to retrieve the posts')
         console.error("Error fetching related posts", error); 
@@ -42,8 +42,8 @@ const OtherPosts: React.FC<OtherPostsProps> = ({ post_id, category }) => {
   }, [post_id, category]); // Dependencies array
 
   return (
-    <div className="w-1/4 flex flex-col space-y-5">
-      <h1 className="text-xl text-primary-dark font-semibold">
+    <div className="w-3/4 flex flex-col space-y-5">
+      <h1 className="text-xl text-black font-semibold">
         Other posts you may like
       </h1>
       {!isLoading && posts.length > 0 ? (
@@ -55,7 +55,7 @@ const OtherPosts: React.FC<OtherPostsProps> = ({ post_id, category }) => {
               src={post.img}
               alt={post.title}
             />
-            <h2 className="text-2xl font-bold hyphen-auto text-primary-dark">
+            <h2 className="text-2xl font-bold hyphen-auto text-purple-800">
               {post.title}
             </h2>
             <Button

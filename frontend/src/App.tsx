@@ -1,20 +1,22 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Single from "./pages/Single";
+import SinglePost from "./pages/SinglePost";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Write from "./pages/Write";
+import Post from "./pages/Post";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   return (
     <>
-      <div className="relative px-20 min-h-[36rem]">
+      <div className="relative px-4 sm:px-6 lg:px-8 min-h-screen">
         <Navbar />
-        <Outlet />
+        <main className="pt-16 pb-8">
+          <Outlet />
+        </main>
       </div>
       <Footer />
     </>
@@ -31,12 +33,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/write",
-        element: <Write />,
+        path: "/post",
+        element: <Post />,
       },
       {
         path: "/post/:id",
-        element: <Single />,
+        element: <SinglePost />,
       },
     ],
   },
@@ -52,12 +54,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col min-h-screen bg-background-hust">
       <ToastContainer position="bottom-center" limit={1} />
-      <div className="w-full bg-background-hust">
+      <div className="flex-1">
         <RouterProvider router={router} />
       </div>
-     
     </div>
   );
 }

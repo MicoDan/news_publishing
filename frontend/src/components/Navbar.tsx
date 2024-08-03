@@ -1,29 +1,26 @@
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../img/logo2.png"; // Import the logo image
 import { Button } from "./ui/button"; // Import custom Button component
-import axios from 'axios' // Import axios for API requests
-import { useContext } from "react"; // Import useContext hook for accessing context
+import axios from 'axios'; // Import axios for API requests
+import { useContext, useState } from "react"; // Import useContext hook for accessing context
 import { AuthContext } from "@/context/authContext"; // Import AuthContext for user authentication
 import BackButton from "./BackButton"; // Import BackButton component for navigation
-import { toast } from 'react-toastify'
 
-// Functional component for the navigation bar
 const Navbar = () => {
-  // Function to handle API request on button click
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
+
   const handleClick = async () => {
     try {
+      //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
       await axios.get("http://localhost:5000/posts");
-      toast.success('retrieved the posts')
+      navigate(user ? "/post" : "/login");
     } catch (error) {
-      toast.error('Error fetching posts')
       console.error("Error fetching posts", error);
     }
   };
 
-  // Access user and logout function from AuthContext
-  const { user, logout } = useContext(AuthContext);
-
-  // Array of categories for the navigation links
   const categoryArray = [
     "Study",
     "Career",
@@ -34,20 +31,15 @@ const Navbar = () => {
   ];
 
   return (
-    <div>
-      {/* Render the BackButton component */}
+    <div className="bg-white shadow-md">
       <BackButton />
-
-      <div className="flex justify-between py-4">
-        {/* Logo and home link */}
-        <div>
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="flex-shrink-0">
           <Link to="/">
             <img src={Logo} alt="logo" className="w-40" />
           </Link>
         </div>
-
-        {/* Navigation links for categories */}
-        <div className="flex flex-4 items-center">
+        <div className="hidden md:flex flex-1 justify-center items-center space-x-4">
           {categoryArray.map((category, index) => (
             <Button
               key={index}
@@ -60,50 +52,114 @@ const Navbar = () => {
             </Button>
           ))}
         </div>
-
-        {/* User information and authentication actions */}
-        <div className="flex gap-5 items-start mt-4 bg-blue-200/0">
-          <div className="flex flex-col items-end bg-red-200/0">
-            <span className="font-bold">
-              {user ? `Welcome back, ${user.username}` : `Welcome guest`}
-            </span>
-            <div className="flex gap-4">
-              {user ? (
-                // Logout button for authenticated users
-                <Button
-                  variant="link"
-                  className="p-0 font-semibold h-min"
-                  onClick={logout}
-                >
-                  Logout
+        <div className="hidden md:flex items-center space-x-4">
+          {user ? (
+            <>
+              <Button
+                variant="hust"
+                className="p-4 font-semibold"
+                onClick={logout}
+              >
+                Logout
+              </Button>
+              <Button
+                variant="hust"
+                className="font-bold"
+                onClick={handleClick}
+              >
+                New post
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/register">
+                <Button variant="hust" className="p-4 font-semibold">
+                  Register
                 </Button>
+              </Link>
+              <Link to="/login">
+                <Button variant="hust" className="p-4 font-semibold">
+                  Login
+                </Button>
+              </Link>
+            </>
+          )}
+        </div>
+        <span className="font-bold ml-4">
+          {user ? `Welcome back, ${user.username}` : `Welcome guest`}
+        </span>
+        <div className="md:hidden flex items-center">
+          <button
+            className="text-gray-500 focus:outline-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      {menuOpen && (
+        <div className="md:hidden px-4 pb-4">
+          <div className="flex flex-col space-y-2">
+            {categoryArray.map((category, index) => (
+              <Button
+                key={index}
+                variant="link"
+                size="default"
+                className="text-copy"
+                asChild
+              >
+                <Link to={`/?category=${category}`}>{category}</Link>
+              </Button>
+            ))}
+            <div className="flex items-center space-x-4 mt-4">
+              {user ? (
+                <>
+                  <Button
+                    variant="hust"
+                    className="p-4 ml-16 mr-5 font-semibold"
+                    onClick={logout}
+                  >
+                    Logout
+                  </Button>
+                  <Button
+                    variant="hust"
+                    className="font-bold"
+                    onClick={handleClick}
+                  >
+                    New post
+                  </Button>
+                </>
               ) : (
                 <>
-                  {/* Register and Login buttons for unauthenticated users */}
-                  <Button variant="link" className="p-0 font-semibold h-min">
-                    <Link to="/register">Register</Link>
-                  </Button>
-                  <Button variant="link" className="p-0 font-semibold h-min">
-                    <Link to="/login">Login</Link>
-                  </Button>
+                  <Link to="/register">
+                    <Button variant="hust" className="p-4 ml-16 mr-5 font-semibold">
+                      Register
+                    </Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button variant="hust" className="p-4 font-semibold">
+                      Login
+                    </Button>
+                  </Link>
                 </>
               )}
             </div>
           </div>
-          
-          {/* Button to create a new post */}
-          <Button
-            variant="hust"
-            className="font-bold"
-            onClick={handleClick}
-            asChild
-          >
-            <Link to={user ? "/write" : "/login"} state={null}>
-              New post
-            </Link>
-          </Button>
         </div>
-      </div>
+      )}
     </div>
   );
 };

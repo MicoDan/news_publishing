@@ -1,49 +1,49 @@
-README
-Application Setup and Usage
-This README provides instructions on setting up and running the application, including the complete source code, database setup, and authentication process.
+
+This README provides instructions on setting up and running the application, including the complete source code, database setup, and authentication process. <br>
 
 Prerequisites
 Before setting up the application, ensure you have the following installed:
 
-Node.js (version 14 or later)
-npm (Node Package Manager)
-PostgreSQL (version 12 or later)
+Node.js (version 14 or later) <br>
+npm (Node Package Manager) <br>
+PostgreSQL (version 12 or later)<br><br>
 Installation
 
 Clone the Repository:
 
 ```bash
-Copy code
-git clone <repository-url>
-cd <repository-directory>
-Install Dependencies:
+git clone https://github.com/MicoDan/blog-pern.git
+cd frontend | cd backend
+
 ```
+Install Dependencies:<br>
 
 ```bash
-Copy code
 npm install
-Environment Variables:
 ```
+<br><br>
 
-Create a .env file in the root directory and add the following environment variables:
+Environment Variables:<br><br>
 
-plaintext
-Copy code
+Create a .env file in the backend and add the following environment variables:
+
+<br>
+
+```bash
+DATABASE_URL = your_database_connection_string
+JWT_KEY = your_jwt_secret_key
+CLOUDINARY_CLOUD_NAME = your_cloudinary_cloud_name
+CLOUDINARY_API_KEY = your_cloudinary_api_key
+CLOUDINARY_SECRET_KEY = your_cloudinary_secret_key
 
 ```
-DATABASE_URL=your_database_connection_string
-JWT_KEY=your_jwt_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_SECRET_KEY=your_cloudinary_secret_key
-Database Setup
+Database Setup :
 
 Create Database and Tables:
 
 Use the following SQL script to create the necessary database tables and insert sample data:
 
-sql
-Copy code
+```bash
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
@@ -70,98 +70,130 @@ CREATE TABLE comments (
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (username, email, password) VALUES
-('testuser', 'testuser@example.com', 'hashed_password_here');
+```
 
 Start the Server:
 
-bash
-Copy code
+```bash
+frontend
+npm run dev
+The server should now be running on http://localhost:5173.
+
+backend
 npm start
-The server should now be running on http://localhost:3000.
+The server should now be running on http://localhost:5000.
+```
 
-API Endpoints
-Authentication:
+API Endpoints<br><br>
 
+Authentication:<br><br>
+
+```
 POST /auth/register: Register a new user
 POST /auth/login: Login a user
 POST /auth/logout: Logout a user
-Posts:
+```
+<br><br>
 
+Posts:<br><br>
+
+```
 GET /posts: Get all posts
 GET /posts/:id: Get a specific post
 GET /posts/:id/related: Get related posts
 POST /posts: Add a new post (requires authentication)
 DELETE /posts/:id: Delete a post (requires authentication)
 PUT /posts/:id: Update a post (requires authentication)
-Comments:
 
+```
+<br><br>
+
+Comments:<br><br>
+
+```
 POST /comments: Add a new comment (requires authentication)
 GET /comments/:post_id: Get comments for a specific post
 DELETE /comments/:id: Delete a comment (requires authentication)
-Users:
+PUT /comments/:id Update a comment (requires authentication)
+```
+<br><br>
 
+Users:<br><br>
+```
 GET /users: Get all users
-Upload:
+```
+<br><br>
 
+Upload<br><br>
+
+```
 POST /upload: Upload an image
-Authentication Process
+```
+<br><br>
+Authentication Process<br><br>
 User Registration
-Endpoint:
-
+Endpoint:<br><br>
+<br>
 POST /auth/register
 
 Request Body:
 
-json
-Copy code
+```json
+
 {
     "username": "your_username",
     "email": "your_email@example.com",
     "password": "your_password"
 }
-Response:
+```
+<br><br>
 
+Response:<br><br>
+
+```
 200 OK: User has been successfully created.
 409 Conflict: User or email already exists.
 500 Internal Server Error: Internal server error.
-User Login
-Endpoint:
+```
+<br><br>
+
+User Login<br><br>
+
+Endpoint:<br><br>
 
 POST /auth/login
+<br><br>
 
-Request Body:
+Request Body:<br><br>
 
-json
-Copy code
+```json
 {
     "username": "your_username",
     "password": "your_password"
 }
-Response:
+```
+<br><br>
+Response:<br><br>
 
+```
 200 OK: Login successful. Sets a JWT token in a cookie.
 404 Not Found: Username or email not found.
 400 Bad Request: Password incorrect.
 500 Internal Server Error: Internal server error.
+```
+<br><br>
+
 User Logout
-Endpoint:
+<br><br>
+Endpoint:<br><br>
 
 POST /auth/logout
-
-Response:
+<br><br>
+Response:<br><br>
 
 200 OK: Logged out successfully.
-Adding New Users and Assigning Roles
-To add a new user, use the registration endpoint as described above. Currently, there are no roles implemented in the provided code. For assigning roles, you would need to extend the user model and adjust the authentication middleware to check for roles.
 
-Notes
-Ensure your database is running and accessible.
-Update the connection string and other environment variables as per your setup.
-The application uses JWT for authentication. Keep your JWT secret key safe and secure.
-Cloudinary is used for image uploads. Ensure you have a Cloudinary account and set the required environment variables.
-License
-This project is licensed under the MIT License.
+
 
 Contact
-For any queries or issues, please contact [your_email@example.com].
+For any queries or issues, please contact [micodan369@gmail.com].
