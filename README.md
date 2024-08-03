@@ -71,6 +71,8 @@ CREATE TABLE comments (
 );
 
 ```
+<br>
+On the POSTS table the user is also regarded as the author if he/she creates/adds a post. <br>
 
 Start the Server:
 
