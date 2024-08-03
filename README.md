@@ -106,6 +106,9 @@ DELETE /posts/:id: Delete a post (requires authentication)
 PUT /posts/:id: Update a post (requires authentication)
 
 ```
+
+!!! The user is also the author on a post once he/she adds a post in this case !!!
+
 <br><br>
 
 Comments:<br><br>
