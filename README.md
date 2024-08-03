@@ -193,7 +193,8 @@ Response:<br><br>
 
 200 OK: Logged out successfully.
 
-
+Author
+Mico Dan
 
 Contact
 For any queries or issues, please contact [micodan369@gmail.com].
