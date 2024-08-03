@@ -9,6 +9,7 @@ interface TextAreaProps {
   placeholder?: string;
 }
 
+
 // Functional component for rendering a styled textarea
 const TextArea: React.FC<TextAreaProps> = ({
   val,
