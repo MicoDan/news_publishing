@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true, // Allow credentials (cookies) to be sent with requests
-    origin: ['http://localhost:5173',  'https://blitzbee.onrender.com/'], // Specify allowed origins
+    origin: ['http://localhost:5173',  'https://blitzbee.onrender.com'], // Specify allowed origins
   })
 );
 
