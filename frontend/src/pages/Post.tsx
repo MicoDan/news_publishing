@@ -50,7 +50,7 @@ const Post = () => {
         const formData = new FormData();
         formData.append("file", file);
         //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-        const res = await axios.post("http://localhost:5000/upload", formData);
+        const res = await axios.post('https://blitzbackend.onrender.com/upload', formData);
         return res.data;
       }
       if (state?.posts_img) return state.posts_img;
@@ -83,7 +83,7 @@ const Post = () => {
       const res = state
         ? await axios.put(
           //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-          `http://localhost:5000/posts/${state.post_id}`,
+          `https://blitzbackend.onrender.com/posts/${state.post_id}`,
           {
             title,
             content: val,
@@ -95,7 +95,7 @@ const Post = () => {
         )
         : await axios.post(
           //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-          "http://localhost:5000/posts",
+          `https://blitzbackend.onrender.com/posts`,
           {
             title,
             content: val,

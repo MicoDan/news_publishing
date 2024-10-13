@@ -7,7 +7,10 @@ dotenv.config(); // Load environment variables from a .env file into process.env
 // Creating a new pool of database connections using configuration from environment variables
 const db = new Pool({
   connectionString: process.env.DATABASE_URL, // The connection string for connecting to the PostgreSQL database
-  ssl: false, // SSL (Secure Sockets Layer) is disabled.
+
+  ssl: {
+    rejectUnauthorized: false, // Disable SSL certificate validation
+  },
 });
 
 export default db;

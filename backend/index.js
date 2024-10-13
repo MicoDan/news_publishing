@@ -19,10 +19,11 @@ app.use(express.json());
 // Middleware to enable CORS with specific options
 app.use(
   cors({
-    credentials: true, // Allows cookies to be sent with requests
-    origin: true, // Allows all origins
+    credentials: true, // Allow credentials (cookies) to be sent with requests
+    origin: ['http://localhost:5173', 'https://blitzbackend.onrender.com'], // Specify allowed origins
   })
 );
+
 
 
 // Route to handle GET requests to the root URL

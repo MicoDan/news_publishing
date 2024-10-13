@@ -6,6 +6,7 @@ import { useContext, useState } from "react"; // Import useContext hook for acce
 import { AuthContext } from "@/context/authContext"; // Import AuthContext for user authentication
 import BackButton from "./BackButton"; // Import BackButton component for navigation
 
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Navbar = () => {
   const handleClick = async () => {
     try {
       // I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-      await axios.get("http://localhost:5000/posts");
+      await axios.get('https://blitzbackend.onrender.com');
       navigate(user ? "/post" : "/login");
     } catch (error) {
       console.error("Error fetching posts", error);

@@ -28,7 +28,7 @@ const OtherPosts: React.FC<OtherPostsProps> = ({ post_id, category }) => {
         // Fetching related posts based on post_id and category
         const response = await axios.get(
         //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-          `http://localhost:5000/posts/${post_id}/related?category=${category}`
+          `/posts/${post_id}/related?category=${category}`
         );
         setPosts(response.data); // Updating state with fetched posts
       } catch (error) {

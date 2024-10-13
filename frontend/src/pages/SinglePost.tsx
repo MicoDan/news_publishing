@@ -45,10 +45,10 @@ const SinglePost: React.FC = () => {
     const fetchData = async () => {
       try {
         //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-        const res = await axios.get(`http://localhost:5000/posts/${postId}`);
+        const res = await axios.get(`https://blitzbackend.onrender.com/posts/${postId}`);
         setPost(res.data);
         //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-        const resp = await axios.get(`http://localhost:5000/comments/${postId}`);
+        const resp = await axios.get(`https://blitzbackend.onrender.com/comments/${postId}`);
         setComments(resp.data);
         setIsLoading(false);
       } catch (err) {
@@ -61,7 +61,7 @@ const SinglePost: React.FC = () => {
   const handleAddComment = async () => {
     try {
       const res = await axios.post<CommentProps>(
-        `http://localhost:5000/comments`,
+        `https://blitzbackend.onrender.com/comments`,
         {
           post_id: postId,
           comment: newComment,
@@ -85,7 +85,7 @@ const SinglePost: React.FC = () => {
   const handleDeleteComment = async (comment_id: number) => {
     try {
       //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-      await axios.delete(`http://localhost:5000/comments/${comment_id}`, { withCredentials: true });
+      await axios.delete(`https://blitzbackend.onrender.com/${comment_id}`, { withCredentials: true });
       setComments((prevComments) => prevComments.filter((comment) => comment.comment_id !== comment_id));
       toast.success("Comment deleted successfully");
     } catch (err) {
@@ -98,7 +98,7 @@ const SinglePost: React.FC = () => {
     try {
       await axios.put(
         //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-        `http://localhost:5000/comments/${comment_id}`,
+        `https://blitzbackend.onrender.com/comments/${comment_id}`,
         { comment: updatedComment },
         { withCredentials: true }
       );
@@ -124,7 +124,7 @@ const SinglePost: React.FC = () => {
     try {
       setIsLoading(true);
       //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-      await axios.delete(`http://localhost:5000/posts/${postId}`, {
+      await axios.delete(`https://blitzbackend.onrender.com/posts/${postId}`, {
         withCredentials: true,
       });
       toast.success('Post deleted successfully');

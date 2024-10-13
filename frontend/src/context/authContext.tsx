@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
    */
   const login = async (input: Input) => {
     //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-    const res = await axios.post("http://localhost:5000/auth/login", input, {
+    const res = await axios.post(`https://blitzbackend.onrender.com/auth/login`, input, {
       withCredentials: true,
     });
     setUser(res.data); // Setting the authenticated user
@@ -44,7 +44,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
    */
   const logout = async () => {
     //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-    const res = await axios.post("http://localhost:5000/auth/logout", {}, {
+    const res = await axios.post('https://blitzbackend.onrender.com/auth/logout', {}, {
       withCredentials: true,
     });
     setUser(null); // Clearing the authenticated user

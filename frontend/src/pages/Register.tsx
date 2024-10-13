@@ -45,7 +45,7 @@ const Register = () => {
     e.preventDefault();
     try {
       //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-      await axios.post("http://localhost:5000/auth/register", input);
+      await axios.post('https://blitzbackend.onrender.com/auth/register', input);
       console.log("User has been successfully created");
       toast.success('successfully registered user')
       navigate("/login");
