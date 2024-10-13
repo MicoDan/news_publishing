@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const handleClick = async () => {
     try {
-      //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+      // I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
       await axios.get("http://localhost:5000/posts");
       navigate(user ? "/post" : "/login");
     } catch (error) {
@@ -23,10 +23,10 @@ const Navbar = () => {
 
   const categoryArray = [
     "Study",
-    "Career",
     "Research",
     "Technology",
-    "Entertainment",
+    "Law",
+    "Political",
     "Other",
   ];
 
@@ -62,13 +62,16 @@ const Navbar = () => {
               >
                 Logout
               </Button>
-              <Button
-                variant="hust"
-                className="font-bold"
-                onClick={handleClick}
-              >
-                New post
-              </Button>
+              {/* Check if the user's email matches the specified email */}
+              {user.email === "menatehawashington@gmail.com" && (
+                <Button
+                  variant="hust"
+                  className="font-bold"
+                  onClick={handleClick}
+                >
+                  New post
+                </Button>
+              )}
             </>
           ) : (
             <>
@@ -85,9 +88,6 @@ const Navbar = () => {
             </>
           )}
         </div>
-        <span className="font-bold ml-4">
-          {user ? `Welcome back, ${user.username}` : `Welcome guest`}
-        </span>
         <div className="md:hidden flex items-center">
           <button
             className="text-gray-500 focus:outline-none"
@@ -134,13 +134,16 @@ const Navbar = () => {
                   >
                     Logout
                   </Button>
-                  <Button
-                    variant="hust"
-                    className="font-bold"
-                    onClick={handleClick}
-                  >
-                    New post
-                  </Button>
+                  {/* Check if the user's email matches the specified email in mobile view */}
+                  {user.email === "menatehawashington@gmail.com" && (
+                    <Button
+                      variant="hust"
+                      className="font-bold"
+                      onClick={handleClick}
+                    >
+                      New post
+                    </Button>
+                  )}
                 </>
               ) : (
                 <>

@@ -41,12 +41,13 @@ const SinglePost: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
-     //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+        //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
         const res = await axios.get(`http://localhost:5000/posts/${postId}`);
         setPost(res.data);
-      //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+        //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
         const resp = await axios.get(`http://localhost:5000/comments/${postId}`);
         setComments(resp.data);
         setIsLoading(false);
@@ -83,7 +84,7 @@ const SinglePost: React.FC = () => {
 
   const handleDeleteComment = async (comment_id: number) => {
     try {
-    //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+      //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
       await axios.delete(`http://localhost:5000/comments/${comment_id}`, { withCredentials: true });
       setComments((prevComments) => prevComments.filter((comment) => comment.comment_id !== comment_id));
       toast.success("Comment deleted successfully");
@@ -122,7 +123,7 @@ const SinglePost: React.FC = () => {
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-    //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+      //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
       await axios.delete(`http://localhost:5000/posts/${postId}`, {
         withCredentials: true,
       });
@@ -149,7 +150,8 @@ const SinglePost: React.FC = () => {
           <img
             src={post.posts_img}
             alt="post image"
-            className="w-full h-80 object-cover"
+            className="w-full h-auto max-h-80 object-cover rounded-lg"
+            style={{ maxWidth: "100%", maxHeight: "450px" }}
           />
           <div className="flex items-center gap-3 text-sm">
             <div>
@@ -173,6 +175,7 @@ const SinglePost: React.FC = () => {
           </h1>
           <PostArea val={post.content} />
 
+
           {/* Comments Section */}
           <div className="mt-8">
             <h2 className="text-xl font-bold text-purple-800">Comments</h2>
@@ -194,7 +197,7 @@ const SinglePost: React.FC = () => {
                               comment.comment
                             );
                             if (updatedComment) handleUpdateComment(comment.comment_id, updatedComment);
-                          }}  
+                          }}
                         />
                         <CiTrash
                           className="w-5 h-5 cursor-pointer text-red-600"

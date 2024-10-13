@@ -28,10 +28,10 @@ const Post = () => {
 
   const categoryArray = [
     "Study",
-    "Career",
     "Research",
     "Technology",
-    "Entertainment",
+    "Law",
+    "Political",
     "Other",
   ];
 
@@ -83,28 +83,28 @@ const Post = () => {
       const res = state
         ? await axios.put(
           //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-            `http://localhost:5000/posts/${state.post_id}`,
-            {
-              title,
-              content: val,
-              category,
-              img: imgUrl,
-              date: formattedDate,
-            },
-            { withCredentials: true }
-          )
+          `http://localhost:5000/posts/${state.post_id}`,
+          {
+            title,
+            content: val,
+            category,
+            img: imgUrl,
+            date: formattedDate,
+          },
+          { withCredentials: true }
+        )
         : await axios.post(
-            //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
-            "http://localhost:5000/posts",
-            {
-              title,
-              content: val,
-              category,
-              img: imgUrl,
-              date: formattedDate,
-            },
-            { withCredentials: true }
-          );
+          //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+          "http://localhost:5000/posts",
+          {
+            title,
+            content: val,
+            category,
+            img: imgUrl,
+            date: formattedDate,
+          },
+          { withCredentials: true }
+        );
       toast.success('Post successfully added');
       console.log(res.data);
       navigate(state ? `/post/${state.post_id}` : "/");

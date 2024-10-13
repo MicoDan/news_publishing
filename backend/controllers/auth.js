@@ -58,7 +58,6 @@ export const login = async (req, res) => {
 
     // Excluding the password from the user data
     const { password, ...otherInformation } = data.rows[0];
-
     // Setting the JWT token in a cookie and returning the user information
     return res
       .cookie("access_token", token, {

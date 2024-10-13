@@ -12,16 +12,10 @@ const Footer = () => {
         </Link>
       </div>
       
-      {/* Container for the tagline text */}
-      <div className="text-copy-lighter/50 font-bold text-2xl italic">
-        "Post a blog of your choice"
-      </div>
+      
       
       <div className="font-semibold text-copy-lighter">
-        Made with React
-        <img src="react.svg" className="scale-75 inline-block" />
-        and Node
-        <img src="node.svg" className="scale-75 inline-block" />
+      Where Stories Unfold
       </div>
     </footer>
   );

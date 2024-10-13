@@ -17,14 +17,14 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); 
+      setIsLoading(true);
       try {
-        //I added the endpoint (http://localhost:5000) only because it's in development, I know this is not good at production level
+        // Development endpoint (use a proper URL in production)
         const res = await axios.get(`http://localhost:5000/posts${category}`);
         setPosts(Array.isArray(res.data) ? res.data : []);
       } catch (error) {
         console.error("Error fetching data", error);
-        setPosts([]); // Setting posts to an empty array in case of error
+        setPosts([]); // Set posts to an empty array in case of error
       }
       setIsLoading(false);
     };
@@ -32,40 +32,45 @@ const Home = () => {
     fetchData();
   }, [category]);
 
+  // Function to limit the post content preview to a certain number of characters
+  const getPreviewText = (content: string, maxLength: number) => {
+    if (content.length > maxLength) {
+      return content.substring(0, maxLength) + '...'; // Append ellipsis after truncation
+    }
+    return content;
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       {isLoading && <Loading />} {/* Show loading component if isLoading is true */}
-      <div className="flex flex-col py-12 gap-10 bg-foreground-hust border-border-hust border-2 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-12">
         {posts.length ? (
           posts.map((post: PostProps) => (
             <div
               key={post.id}
-              className="flex flex-col md:flex-row justify-around gap-6 md:gap-10 mx-4 md:mx-8 lg:mx-16 xl:mx-24 odd:flex-col-reverse md:odd:flex-row-reverse"
+              className="flex flex-col items-center justify-start bg-foreground-hust border-border-hust border-2 rounded-lg shadow-lg p-4"
             >
-              <div className="w-full md:w-72 h-72 overflow-hidden rounded-xl shadow-2xl">
+              <div className="w-full h-48 overflow-hidden rounded-lg">
                 <img
                   src={post.img}
                   alt="post img"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex-1 md:flex-2">
-                <div className="flex flex-col gap-4">
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold hyphen-auto text-copy">
-                    {post.title}
-                  </h1>
-                  <p className="line-clamp-6 indent-4 text-justify text-copy-light">
-                    {post.content}
-                  </p>
-                </div>
-                <Link to={`/post/${post.id}`}>
-                  <Button className="mt-4 md:mt-6 lg:mt-10">Read more</Button>
-                </Link>
-              </div>
+              <h1 className="mt-4 text-xl font-bold text-center text-copy">
+                {post.title}
+              </h1>
+              {/* Display truncated content */}
+              <p className="mt-2 text-justify line-clamp-4 text-copy-light">
+                {getPreviewText(post.content, 150)} {/* Truncate content to 150 characters */}
+              </p>
+              <Link to={`/post/${post.id}`}>
+                <Button className="mt-4">Read more</Button>
+              </Link>
             </div>
           ))
         ) : (
-          <div className="flex justify-center items-center text-copy-lighter italic text-lg">
+          <div className="flex justify-center items-center text-copy-lighter italic text-lg col-span-full">
             There's no post yet.
           </div>
         )}
